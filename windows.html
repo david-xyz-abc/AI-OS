@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Features</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 20px;
+            background: #ffffff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+        }
+
+        .slide {
+            min-width: 100%;
+            padding: 40px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .slide p {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        .arrows {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .arrow {
+            background: rgba(0, 0, 0, 0.1);
+            border: none;
+            width: 60px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            position: absolute;
+        }
+
+        .arrow:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .left-arrow {
+            left: 0;
+        }
+
+        .right-arrow {
+            right: 0;
+        }
+
+        .arrow img {
+            width: 30px;
+            height: 30px;
+        }
+
+        ul {
+            text-align: left;
+            margin: 20px 0;
+            padding-left: 20px;
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel">
+        <div class="slides">
+            <!-- Slide 1 -->
+            <div class="slide">
+                <h2>Key Features</h2>
+                <p>
+                    Windows 11 is the latest operating system by Microsoft, designed with a focus on productivity,
+                    aesthetics, and seamless integration of modern technologies. Key features include:
+                    <ul>
+                        <li>A redesigned user interface with a centered taskbar and rounded corners.</li>
+                        <li>Enhanced multitasking capabilities, such as Snap Layouts and Snap Groups.</li>
+                        <li>Integration with Microsoft Teams for communication.</li>
+                        <li>Compatibility with Android apps through the Microsoft Store.</li>
+                        <li>Advanced gaming features like AutoHDR and DirectStorage.</li>
+                    </ul>
+                </p>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="slide">
+                <h2>Integration of AI Technologies</h2>
+                <p>
+                    <strong>Natural Language Processing (NLP)</strong>
+                    <ul>
+                        <li>Copilot AI: Offers contextual assistance directly integrated into the OS.</li>
+                        <li>Voice Recognition: Interact with the OS via voice commands.</li>
+                        <li>AI-powered search with contextual and semantic understanding.</li>
+                    </ul>
+                </p>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="slide">
+                <h2>Advanced Gaming Enhancements</h2>
+                <p>
+                    Windows 11 takes gaming to the next level with AI-driven technologies:
+                    <ul>
+                        <li>AutoHDR: Automatically improves lighting and shadows in supported games.</li>
+                        <li>DirectStorage: Reduces load times for smoother gameplay.</li>
+                        <li>Variable Refresh Rate: Ensures consistent and seamless visuals.</li>
+                        <li>AI-based Upscaling: Enhances low-resolution textures to provide sharper images.</li>
+                        <li>Dynamic GPU Resource Allocation: Optimizes performance based on gaming requirements.</li>
+                    </ul>
+                </p>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="slide">
+                <h2>Accessibility and Security</h2>
+                <p>
+                    Windows 11 integrates AI for better accessibility and security:
+                    <ul>
+                        <li>Real-time subtitles and voice typing for differently-abled users.</li>
+                        <li>Magnifier tools and screen readers for improved navigation.</li>
+                        <li>Windows Defender: AI-driven threat detection and cybersecurity.</li>
+                        <li>Windows Hello: Adaptive biometric authentication for secure login.</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+
+        <!-- Arrows -->
+        <div class="arrows">
+            <button class="arrow left-arrow">
+                <img src="left-arrow.png" alt="Left">
+            </button>
+            <button class="arrow right-arrow">
+                <img src="right-arrow.png" alt="Right">
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const slides = document.querySelector('.slides');
+        const leftArrow = document.querySelector('.left-arrow');
+        const rightArrow = document.querySelector('.right-arrow');
+        let currentIndex = 0;
+
+        function updateSlidePosition() {
+            slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        leftArrow.addEventListener('click', () => {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : 0;
+            updateSlidePosition();
+        });
+
+        rightArrow.addEventListener('click', () => {
+            currentIndex = (currentIndex < slides.children.length - 1) ? currentIndex + 1 : slides.children.length - 1;
+            updateSlidePosition();
+        });
+    </script>
+</body>
+</html>
