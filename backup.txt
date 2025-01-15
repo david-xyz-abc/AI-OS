@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI at the Core: OS Innovations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #ffffff;
+            color: #333;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: background 0.5s ease-in-out;
+        }
+
+        .top-banner {
+            position: relative;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: background-color 0.5s ease-in-out;
+        }
+
+        .top-banner video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            filter: brightness(70%);
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .top-banner h1 {
+            font-size: 3em;
+            color: #f8f9fa;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+            margin-bottom: 10px;
+            position: relative;
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+
+        .top-banner h1.fade-out {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+
+        .top-banner h1.fade-in {
+            transform: translateY(50px);
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .button {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s, background 0.3s;
+        }
+
+        .button img {
+            width: 30px;
+            height: 30px;
+            pointer-events: none;
+        }
+
+        .button:hover {
+            transform: scale(1.5) rotate(10deg);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .button.active {
+            transform: scale(1);
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px) brightness(1.2);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.4), 0 8px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .button.active::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0) 70%);
+            filter: blur(8px);
+            z-index: -1;
+            border-radius: 50%;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: row;
+            gap: 1%;
+            height: calc(100vh - 250px);
+            padding: 20px;
+            justify-content: center;
+            align-items: stretch;
+        }
+
+        .content-box {
+            border-radius: 20px;
+            background: linear-gradient(to bottom, #f0f0f0, #dcdcdc);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 20px;
+            overflow: hidden;
+            transition: box-shadow 0.5s ease-in-out;
+        }
+
+        .content-box.large {
+            flex: 0 0 60%;
+        }
+
+        .content-box.small {
+            flex: 0 0 35%;
+        }
+
+        .windows-glow .content-box {
+            box-shadow: 0 0 30px 5px rgba(0, 120, 215, 0.7);
+        }
+
+        .macos-glow .content-box {
+            box-shadow: 0 0 30px 5px rgba(255, 167, 38, 0.7);
+        }
+
+        .android-glow .content-box {
+            box-shadow: 0 0 30px 5px rgba(52, 168, 83, 0.7);
+        }
+
+        .chromeos-glow .content-box {
+            box-shadow: 0 0 30px 5px rgba(234, 67, 53, 0.7);
+        }
+
+        .home-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s, background 0.3s;
+        }
+
+        .home-button img {
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+    <script>
+        function switchToVideo(videoSrc, buttonClass) {
+            const banner = document.querySelector('.top-banner');
+            const body = document.body;
+            const content = document.querySelector('.content');
+            const largeBox = document.querySelector('.content-box.large');
+            let videoElement = document.querySelector('.top-banner video');
+            const buttons = document.querySelectorAll('.button');
+            const title = document.querySelector('.top-banner h1');
+
+            buttons.forEach(button => button.classList.remove('active'));
+            content.className = 'content'; // Reset any glow classes
+
+            const activeButton = document.querySelector(`.button.${buttonClass}`);
+            activeButton.classList.add('active');
+            content.classList.add(`${buttonClass}-glow`);
+
+            title.classList.add('fade-out');
+
+            setTimeout(() => {
+                if (videoElement) {
+                    videoElement.style.opacity = 0; // Fade out current video
+                    setTimeout(() => {
+                        videoElement.src = videoSrc; // Update to the new video
+                        videoElement.loop = false; // Disable looping for other videos
+                        videoElement.load();
+                        videoElement.style.opacity = 1; // Fade in the new video
+                    }, 500);
+                }
+
+                // Load the HTML page for the Windows button
+                if (buttonClass === 'windows') {
+                    fetch('windows.html')
+                        .then(response => response.text())
+                        .then(html => {
+                            largeBox.innerHTML = html; // Insert the content into the large box
+                        })
+                        .catch(err => console.error('Failed to load windows.html:', err));
+                }
+
+                setTimeout(() => {
+                    switch (buttonClass) {
+                        case 'windows':
+                            banner.style.backgroundColor = 'rgba(0, 120, 215, 0.2)';
+                            title.textContent = 'Windows';
+                            break;
+                        case 'macos':
+                            banner.style.backgroundColor = 'rgba(255, 167, 38, 0.2)';
+                            title.textContent = 'MacOS';
+                            break;
+                        case 'android':
+                            banner.style.backgroundColor = 'rgba(52, 168, 83, 0.2)';
+                            title.textContent = 'Android';
+                            break;
+                        case 'chromeos':
+                            banner.style.backgroundColor = 'rgba(234, 67, 53, 0.2)';
+                            title.textContent = 'ChromeOS';
+                            break;
+                    }
+
+                    title.classList.remove('fade-out');
+                    title.classList.add('fade-in');
+                }, 500);
+            }, 500);
+        }
+
+        function goToHome() {
+            const banner = document.querySelector('.top-banner');
+            const body = document.body;
+            const videoElement = document.querySelector('.top-banner video');
+            const buttons = document.querySelectorAll('.button');
+            const title = document.querySelector('.top-banner h1');
+            const content = document.querySelector('.content');
+
+            buttons.forEach(button => button.classList.remove('active'));
+            content.className = 'content'; // Reset any glow classes
+
+            title.classList.add('fade-out');
+
+            setTimeout(() => {
+                videoElement.style.opacity = 0; // Fade out current video
+                setTimeout(() => {
+                    videoElement.src = 'topbanner.mp4'; // Reset to default video
+                    videoElement.loop = true; // Ensure the default video loops
+                    videoElement.load();
+                    videoElement.style.opacity = 1; // Fade in the default video
+                }, 500);
+
+                banner.style.backgroundColor = 'transparent';
+                title.textContent = 'AI at the Core: OS Innovations';
+
+                title.classList.remove('fade-out');
+                title.classList.add('fade-in');
+            }, 500);
+        }
+    </script>
+</head>
+<body>
+    <div class="top-banner">
+        <video autoplay muted loop>
+            <source src="topbanner.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <h1>AI at the Core: OS Innovations</h1>
+        <div class="button-container">
+            <button class="button windows" onclick="switchToVideo('win_vid.mp4', 'windows')">
+                <img src="win_ico.png" alt="Windows Icon">
+            </button>
+            <button class="button macos" onclick="switchToVideo('mac.mp4', 'macos')">
+                <img src="mac_ico.png" alt="MacOS Icon">
+            </button>
+            <button class="button android" onclick="switchToVideo('android.mp4', 'android')">
+                <img src="android_ico.png" alt="Android Icon">
+            </button>
+            <button class="button chromeos" onclick="switchToVideo('chrome.mp4', 'chromeos')">
+                <img src="chrome_ico.png" alt="ChromeOS Icon">
+            </button>
+        </div>
+        <button class="home-button" onclick="goToHome()">
+            <img src="home.png" alt="Home Button">
+        </button>
+    </div>
+    <div class="content">
+        <div class="content-box large">
+            <p>This section occupies 65% of the width below the banner and stretches to fill the page.</p>
+        </div>
+        <div class="content-box small">
+            <p>This section occupies the remaining 33% below the banner and stretches to fill the page.</p>
+        </div>
+    </div>
+</body>
+</html>
